@@ -1,3 +1,17 @@
 #!/usr/bin/gnuplot -p
+#Usage: gnuplot -e "filename='xy.csv'" ram.gplt
+default_file="ram.csv"
+if(!exist("filename")) {
+	print "filename not set. Using default"; filename=default_file
+} else {
+	if(!exist(filename)) {
+		print "file ", filename, " not found, using default"; filename=default_file
+	}
+}
+print "Plotting: ", filename
 set datafile separator ","
-plot "ram.csv" using 1:2, "" using 1:3, "" using 1:4, "" using 1:5, "" using 1:6
+plot filename using 1:2 w lines, \
+	 ""       using 1:3 w lines, \
+	 ""       using 1:4 w lines, \
+	 ""       using 1:5 w lines, \
+	 ""       using 1:6 w lines
