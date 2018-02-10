@@ -1,0 +1,11 @@
+#!/usr/bin/gnuplot
+#use "cat /dev/ttyUSB0 > /dev/shm/data" to push data into the tempfile
+set terminal x11 1 noraise
+set yrange [0:1024]
+
+nc = "`head -n5 /dev/shm/data | awk '{print NF}' | sort | tail -n1`"
+
+plot for [i=1:nc] '<tail -n 5000 /dev/shm/data' using i with lines
+pause 0.02
+refresh
+reread
