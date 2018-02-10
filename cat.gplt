@@ -1,0 +1,1 @@
+plot '<cat' using 1 w lines
