@@ -1,11 +1,17 @@
 #!/usr/bin/gnuplot
 #use "cat /dev/ttyUSB0 > /dev/shm/data" to push data into the tempfile
 set terminal x11 1 noraise
-set yrange [0:1024]
+#set yrange [0:100]
+filename="/dev/shm/data.csv"
 
-nc = "`head -n5 /dev/shm/data | awk '{print NF}' | sort | tail -n1`"
+cmd = "head -n5 ".filename." | awk -F, '{print NF}' | sort | tail -n1"
+nc = system(cmd)
 
-plot for [i=1:nc] '<tail -n 5000 /dev/shm/data' using i with lines
-pause 0.02
+set datafile separator ","
+plot for [i=2:nc] "< tail -n5000 ".filename using 1:i with lines notitle
+set ytics 10
+set xtics 60
+set grid
+pause 0.2
 refresh
 reread

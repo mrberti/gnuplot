@@ -10,8 +10,9 @@ if(!exist("filename")) {
 }
 print "Plotting: ", filename
 set datafile separator ","
-plot filename using 1:2 w lines, \
-	 ""       using 1:3 w lines, \
-	 ""       using 1:4 w lines, \
-	 ""       using 1:5 w lines, \
-	 ""       using 1:6 w lines
+plot filename using 1:2 w lines
+#plot filename using 1:2 w lines, \
+#	 ""       using 1:3 w lines, \
+#	 ""       using 1:4 w lines, \
+#	 ""       using 1:5 w lines, \
+#	 ""       using 1:6 w lines

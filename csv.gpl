@@ -1,0 +1,14 @@
+#!/usr/bin/gnuplot -p
+#Usage: gnuplot -e "filename='xy.csv'" csv.gpl
+default_file="/dev/shm/data.csv"
+if(!exist("filename")) {
+	print "filename not set. Using default"; filename=default_file
+	print "Usage:\n\tgnuplot -e \"filename='xy.csv'\" csv.gpl -p"
+}
+
+nc = system("head -n5 ".filename." | awk -F, '{print NF}' | sort | tail -n2")
+print "Plotting: ", filename
+print "Columns: ", nc
+set datafile separator ","
+plot for [i=2:nc] filename using 1:i w lines
+
