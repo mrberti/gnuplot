@@ -5,10 +5,12 @@ set xdata time
 set timefmt "%s"
 set format x "%m/%d %H:%M"
 set grid
-set xtics 432000
+set xtics 86400
 set xtics rotate
 set ytics 1
 set title "temps.csv"
 n=3
-plot for [i=2:(n+1)] "<tail -n 72000 /home/simon/temps.csv" using ($1+(9*3600)):i with lines notitle,\
-#"<tail -n 4320 /home/simon/temps.csv" using ($1+(9*3600)):($3-$2) with lines notitle
+line_count=system("expr 10 \\* 24 \\* 60") # in minutes (d * h * m)
+cmd="<tail -n ".line_count." /home/simon/temps.csv"
+# The ($1+x) is for adjusting the timezone
+plot for [i=2:(n+1)] cmd using ($1+(2*3600)):i with lines notitle,\
