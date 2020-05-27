@@ -1,16 +1,20 @@
-set terminal svg dynamic
-set output '/var/www/html/simon/temps/temps.tmp.svg'
 set datafile separator ','
 set xdata time
 set timefmt "%s"
 set format x "%m/%d %H:%M"
 set grid
-set xtics 86400
+set xtics 6*60*60 # seconds
 set xtics rotate
 set ytics 1
 set title "temps.csv"
 n=3
 line_count=system("expr 10 \\* 24 \\* 60") # in minutes (d * h * m)
 cmd="<tail -n ".line_count." /home/simon/temps.csv"
+
+set terminal dumb
 # The ($1+x) is for adjusting the timezone
+plot for [i=2:(n+1)] cmd using ($1+(2*3600)):i with lines notitle,\
+
+set terminal svg dynamic
+set output '/var/www/html/simon/temps/temps.tmp.svg'
 plot for [i=2:(n+1)] cmd using ($1+(2*3600)):i with lines notitle,\
